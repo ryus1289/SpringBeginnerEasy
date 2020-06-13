@@ -31,13 +31,13 @@ public class InquiryController {
     @GetMapping
     public String index(Model model) {
 
-        Inquiry inquiry = new Inquiry();
-        inquiry.setId(4);
-        inquiry.setName("sample");
-        inquiry.setEmail("sample");
-        inquiry.setContents("sample");
-
-        inquiryService.update(inquiry);
+//        Inquiry inquiry = new Inquiry();
+//        inquiry.setId(4);
+//        inquiry.setName("sample");
+//        inquiry.setEmail("sample");
+//        inquiry.setContents("sample");
+//
+//        inquiryService.update(inquiry);
 
 //        try {
 //            inquiryService.update(inquiry);
@@ -50,7 +50,7 @@ public class InquiryController {
         model.addAttribute("inquiryList", list);
         model.addAttribute("title", "Inquiry Index");
 
-        return "inquiry/index";
+        return "inquiry/index_boot";
     }
 
     @GetMapping("/form")
@@ -58,13 +58,13 @@ public class InquiryController {
             Model model,
             @ModelAttribute("complete") String complete) {
         model.addAttribute("title", "Inquiry Form");
-        return "inquiry/form";
+        return "inquiry/form_boot";
     }
 
     @PostMapping("/form")
     public String formGoBack(InquiryForm inquiryForm, Model model) {
         model.addAttribute("title", "Inquiry Form");
-        return "inquiry/form";
+        return "inquiry/form_boot";
     }
 
 
@@ -75,12 +75,12 @@ public class InquiryController {
 
         if(result.hasErrors()) {
             model.addAttribute("title", "Inquiry Form");
-            return "inquiry/form";
+            return "inquiry/form_boot";
         }
 
         model.addAttribute("title", "Confirm Page");
 
-        return "inquiry/confirm";
+        return "inquiry/confirm_boot";
     }
 
     @PostMapping("/complete")
@@ -91,7 +91,7 @@ public class InquiryController {
 
         if(result.hasErrors()) {
             model.addAttribute("title", "Inquiry Form");
-            return "inquiry/form";
+            return "inquiry/form_boot";
         }
 
         Inquiry inquiry = new Inquiry();
