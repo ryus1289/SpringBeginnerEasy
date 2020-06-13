@@ -30,6 +30,22 @@ public class InquiryController {
 
     @GetMapping
     public String index(Model model) {
+
+        Inquiry inquiry = new Inquiry();
+        inquiry.setId(4);
+        inquiry.setName("sample");
+        inquiry.setEmail("sample");
+        inquiry.setContents("sample");
+
+        inquiryService.update(inquiry);
+
+//        try {
+//            inquiryService.update(inquiry);
+//        } catch(InquiryNotFoundException e) {
+//            model.addAttribute("message", e);
+//            return "error/CustomPage";
+//        }
+
         List<Inquiry> list = inquiryService.getAll();
         model.addAttribute("inquiryList", list);
         model.addAttribute("title", "Inquiry Index");
@@ -89,4 +105,9 @@ public class InquiryController {
         return "redirect:/inquiry/form";
     }
 
+//    @ExceptionHandler(InquiryNotFoundException.class)
+//    public String handleExceptiono(InquiryNotFoundException e, Model model) {
+//      model.addAttribute("message", e);
+//      return "error/CustomPage";
+//    }
 }
