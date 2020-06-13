@@ -10,35 +10,42 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Survey;
-import com.example.demo.entity.Survey;
 
 @Repository
 public class SurveyDaoImpl implements SurveyDao{
-	
-	private final JdbcTemplate jdbcTemplate;
-	
-	@Autowired
-	public SurveyDaoImpl(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 
-	@Override
-	public void insertSurvey(Survey survey) {
+    private final JdbcTemplate jdbcTemplate;
 
-		//hands-on
-		
-	}
+    @Autowired
+    public SurveyDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-	@Override
-	public List<Survey> getAll() {
-		//make SQL
-		List<Map<String, Object>> resultList = null;
-		List<Survey> list = null;
+    @Override
+    public void insertSurvey(Survey survey) {
+        jdbcTemplate.update("INSERT INTO survey(age, satisfaction, comment, created) values(?, ?, ?, ?)",
+                survey.getAge(), survey.getSatisfaction(), survey.getComment(), survey.getCreated());
+    }
 
-		//Set the data form database into Survey instance
+    @Override
+    public List<Survey> getAll() {
 
-		return list;
-	}
-	
-	
+        String sql = "SELECT * from survey";
+        List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
+        List<Survey> list = new ArrayList<Survey>();
+
+        for(Map<String, Object> result : resultList) {
+            Survey survey = new Survey();
+            survey.setId((int)result.get("id"));
+            survey.setAge((int)result.get("age"));
+            survey.setSatisfaction((int)result.get("satisfaction"));
+            survey.setComment((String)result.get("comment"));
+            survey.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+            list.add(survey);
+        }
+
+        return list;
+    }
+
+
 }
